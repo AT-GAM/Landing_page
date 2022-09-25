@@ -24,7 +24,7 @@
  * 
 */
 // counter to specify the number of section.
-let count = 3;
+let count = 1;
 
 /**
  * End Global Variables
@@ -32,24 +32,33 @@ let count = 3;
  * 
 */
 // using createSection function to creat and add new section to the main tag
- 
- const createSec = () => {
-    count++;
-    const content = `<section id="section${count}" data-nav="Section ${count}">
-      <div class="landing__container">
+
+function createSec() {
+  const htmlElement = `<section id="section${count}" data-nav="Section ${count}" >
+    <div class="landing__container">
       <h2>Section ${count}</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.</p>
-      
+
       <p>Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse imperdiet porttitor tortor, eget elementum tortor mollis non.</p>
-      </div>
-      </section>`;
-    document.querySelector("main").insertAdjacentHTML("beforeend", content);
-  };
-  const removeSec = () => {
-    document.getElementById("section" + count).remove();
-    document.getElementById("navItem"+count).remove();
-    count--;
-  };
+    </div>
+  </section>`;
+  document.getElementById("mainContent").insertAdjacentHTML("beforeend", htmlElement);
+};
+
+// build the nav
+const nav_Bar = document.getElementById("navbar__list");
+const createNav_Items = () => {
+  const listItem = `<li><a href="#section${count}" id="navItem${count}" data-nav="section${count}" class="menu__link"> Section ${count}</a></li>`;
+  nav_Bar.insertAdjacentHTML("beforeend", listItem);
+  ;
+};
+
+const removeSec = () => {
+  count--
+  document.getElementById("section" + count).remove();
+  document.getElementById("navItem" + count).remove();
+
+};
 
 
 
@@ -61,26 +70,19 @@ let count = 3;
 
 // creating more sections by click on the button
 document.getElementById("btn").addEventListener("click", () => {
-    createSec();
-    createNav_Items();
-  });
+  createSec();
+  createNav_Items();
+  count++;
+});
 document.getElementById("btn2").addEventListener("click", () => {
-    if(count===0){window.alert("there is nosection here")}
-    else{removeSec();}
-  });
+  if (count === 0) { window.alert("there is nosection here") }
+  else {
+    removeSec();
+  }
+});
 
-// build the nav
-// but I need to remove all items to avoid the duplicating
- const navBar = document.getElementById("navbar__list");
- const createNav_Items = () => {
-   navBar.innerHTML = "";
-   let count=1;
-   document.querySelectorAll("section").forEach((section) => {
-     const listItem = `<li><a href="#${section.id}" id="navItem${count}" data-nav="${section.id}" class="menu__link">${section.dataset.nav}</a></li>`;
-     navBar.insertAdjacentHTML("beforeend", listItem);
-     count++;
-   });
- };
+
+
 
 
 
@@ -89,7 +91,7 @@ document.getElementById("btn2").addEventListener("click", () => {
 /**
   shortcut this code by using CSS (html{ scroll-behavior: "smooth"})
  */
-/*  navBar.addEventListener("click", (event) => {
+/*  nav_Bar.addEventListener("click", (event) => {
      event.preventDefault();
      if (event.target.dataset.nav) {
        document
@@ -120,68 +122,63 @@ const footer = document.querySelector(".page__footer");
 
 // Clicking on this button the document will scroll to the top smoothly
 toTop.addEventListener("click", () => {
-    window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
 });
 // Clicking on this button the document will scroll to the top smoothly
 toBottom.addEventListener("click", () => {
-    footer.scrollIntoView();
-  });
+  footer.scrollIntoView();
+});
+
+
+
+// Build menu 
+// create three navbarItem by javascript instead of HTML
+
+document.querySelectorAll("section").forEach((section) => {
+  const listItem = `<li><a href="#${section.id}" id="navItem${count}" data-nav="${section.id}" class="menu__link">${section.dataset.nav}</a></li>`;
+  nav_Bar.insertAdjacentHTML("beforeend", listItem);
+  count++;
+});
+
+
 /**
  disappear the header and appear again when scrolling.
  appearing this button(toTop) after 800px to down
  
  disappearing this button(toBottom) in footer's part
  */
-let isScrolling;
 document.onscroll = () => {
- if(count!== 0){
-    
-  header.style.display = "block"
-  clearTimeout(isScrolling)
-   isScrolling = setTimeout(() => {
-    header.style.display = "none";
-  }, 6000);
+  if (window.scrollY > 300) toTop.style.display = "block";
+  else toTop.style.display = "none";
 
-  window.scrollY > 800
-    ? (toTop.style.display = "block")
-    : (toTop.style.display = "none");
-  
-    window.scrollY < document.getElementById("section"+count).offsetTop
+  window.scrollY < document.getElementById("endPage").offsetWidth
     ? (toBottom.style.display = "block")
     : (toBottom.style.display = "none");
-}
 };
-
-
-// Build menu 
-// create three navbarItem by javascript instead of HTML
- 
- for (let i = 1; i < 4; i++);
- createNav_Items();
-
-  
-  
-
 
 
 // Set sections as active
 
 
 // Add class 'active' to section when near top of viewport
-// using Element.getBoundingClientRect() instead of Intersection Observer API 
-window.onscroll = function() {
-	document.querySelectorAll("section").forEach(function(active) {
-    let active___Link = navBar.querySelector(`[data-nav=${active.id}]`);
-	if(active.getBoundingClientRect().top >= -300 && active.getBoundingClientRect().top <= 100){
-    active.classList.add("your-active-class");
-    active___Link.classList.add("active-link");  }
-    else{
-         active.classList.remove("your-active-class");
-         active___Link.classList.remove("active-link");    }
-	});
-}
+// i used offsetTop and offsetHeight to identify the borders of every section
+window.onscroll = function () {
+  let sections = document.querySelectorAll("section");
+  sections.forEach(section => {
+    let navBarEle = nav_Bar.querySelector(`[data-nav=${section.id}]`);
+    let scrollPosition = document.documentElement.scrollTop;
+    if (scrollPosition >= section.offsetTop && scrollPosition < (section.offsetTop + section.offsetHeight)) {
+      section.classList.add("your-active-class");
+      navBarEle.classList.add("active-link");
+    }
+    else {
+      section.classList.remove("your-active-class");
+      navBarEle.classList.remove("active-link");
+    }
+  });
 
 
+};
 
 
 
