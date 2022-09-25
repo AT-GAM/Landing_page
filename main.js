@@ -91,19 +91,6 @@ document.getElementById("btn2").addEventListener("click", () => {
 /**
   shortcut this code by using CSS (html{ scroll-behavior: "smooth"})
  */
-/*  nav_Bar.addEventListener("click", (event) => {
-     event.preventDefault();
-     if (event.target.dataset.nav) {
-       document
-         .getElementById(`${event.target.dataset.nav}`)
-         .scrollIntoView({ behavior: "smooth" });
-       setTimeout(() => {
-         location.hash = `${event.target.dataset.nav}`;
-       }, 200);
-     }
-   });*/
-
-
 
 
 /**
@@ -151,7 +138,7 @@ document.onscroll = () => {
   if (window.scrollY > 300) toTop.style.display = "block";
   else toTop.style.display = "none";
 
-  window.scrollY < document.getElementById("endPage").offsetParent
+  window.scrollY <= document.getElementById("endPage").scrollTop
     ? (toBottom.style.display = "block")
     : (toBottom.style.display = "none");
 };
