@@ -54,7 +54,7 @@ const createNav_Items = () => {
 };
 
 const removeSec = () => {
-  count--
+  count--;
   document.getElementById("section" + count).remove();
   document.getElementById("navItem" + count).remove();
 
@@ -75,7 +75,7 @@ document.getElementById("btn").addEventListener("click", () => {
   count++;
 });
 document.getElementById("btn2").addEventListener("click", () => {
-  if (count === 0) { window.alert("there is nosection here") }
+  if (count <=2) { window.alert("The website has to have at least one section") }
   else {
     removeSec();
   }
@@ -138,9 +138,16 @@ document.onscroll = () => {
   if (window.scrollY > 300) toTop.style.display = "block";
   else toTop.style.display = "none";
 
-  window.scrollY <= document.getElementById("endPage").scrollTop
-    ? (toBottom.style.display = "block")
-    : (toBottom.style.display = "none");
+  if(count!==1){
+    
+  window.scrollY < document.getElementById("section"+(count-1)).offsetTop
+  ? (toBottom.style.display = "block")
+  : (toBottom.style.display = "none");
+
+
+
+  }
+
 };
 
 
