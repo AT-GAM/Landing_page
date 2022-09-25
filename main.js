@@ -167,18 +167,22 @@ window.onscroll = function () {
   sections.forEach(section => {
     let navBarEle = nav_Bar.querySelector(`[data-nav=${section.id}]`);
     let scrollPosition = document.documentElement.scrollTop;
-    if (scrollPosition >= section.offsetTop && scrollPosition < (section.offsetTop + section.offsetHeight)) {
-      section.classList.add("your-active-class");
-      navBarEle.classList.add("active-link");
-    }
-    else {
-      section.classList.remove("your-active-class");
-      navBarEle.classList.remove("active-link");
-    }
+    (scrollPosition >= (section.offsetTop-50) && scrollPosition < (section.offsetTop + section.offsetHeight-50  ))
+      ?
+      (section.classList.add("your-active-class"),
+        navBarEle.classList.add("active-link"))
+
+
+      :
+      (section.classList.remove("your-active-class"),
+        navBarEle.classList.remove("active-link"))
+
   });
 
 
 };
+
+
 
 
 
