@@ -151,7 +151,7 @@ document.onscroll = () => {
   if (window.scrollY > 300) toTop.style.display = "block";
   else toTop.style.display = "none";
 
-  window.scrollY < document.getElementById("endPage").offsetWidth
+  window.scrollY < document.getElementById("endPage").offsetParent
     ? (toBottom.style.display = "block")
     : (toBottom.style.display = "none");
 };
